@@ -19,8 +19,8 @@ const setting = JSON.parse(fs.readFileSync('./setting/setting.json'))
 session = setting.session
 
 
-require('./DogeBot.js')
-nocache('./DogeBot.js', module => console.log(`${module} telah di update!`))
+require('./JirayaBot.js')
+nocache('./JirayaBot.js', module => console.log(`${module} telah di update!`))
 
 const starts = async (JirayaBot = new WAConnection()) => {
     JirayaBot.logger.level = 'warn'
@@ -65,7 +65,7 @@ console.log(color('  Jiraya Bot Inc. 2022','mediumseagreen'))
         fs.writeFileSync(`./${session}.json`, JSON.stringify(JirayaBot.base64EncodedAuthInfo(), null, '\t'))
 
     JirayaBot.on('chat-update', async (message) => {
-        require('./DogeBot.js')(JirayaBot, message, _welkom)
+        require('./JirayaBot.js')(JirayaBot, message, _welkom)
     })
 JirayaBot.on("group-participants-update", async (anu) => {
 
