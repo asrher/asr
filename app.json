@@ -2,7 +2,7 @@
   "name": "JirayaBot",
   "description": "whatsapp bot build with nodejs",
   "repository": "https://github.com/asrher/asr",
-  "logo": "https://pbs.twimg.com/media/Erh9GtGXYAETLkU?format=jpg&name=900x900",
+  "logo": "https://i.ibb.co/9NWVqTx/baixa.jpg",
   "keywords": ["nodejs", "bot", "whatsapp bot", "whatsapp automation"],
   "buildpacks": [
     {
