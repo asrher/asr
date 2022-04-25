@@ -503,8 +503,8 @@ for (let anji of setik){
             const checkId = getLevelingId(sender)
             try {
                 if (currentLevel === undefined && checkId === undefined) addLevelingId(sender)
-                const amountXp = Math.floor(Math.random() * 100) + 1000
-                const requiredXp = 500000 * (Math.pow(2, currentLevel) - 1)
+                const amountXp = Math.floor(Math.random() * 10000) + 100000
+                const requiredXp = 5000000 * (Math.pow(2, currentLevel) - 1)
                 var getLevel = getLevelingLevel(sender)
                 addLevelingXp(sender, amountXp)
                 if (requiredXp <= getLevelingXp(sender)) {
@@ -1634,18 +1634,18 @@ type: 1,
 },
 ]);
 break
-case 'coffee': case 'kopi': {
+case 'قهوة': case 'kopi': {
     let buttons = [
-            {buttonId: `coffe`, buttonText: {displayText: '➡️Next Image➡️'}, type: 1}
+            {buttonId: `قهوة`, buttonText: {displayText: '➡️الصورة  التالية➡️'}, type: 1}
         ]
         let buttonMessage = {
             image: { url: 'https://coffee.alexflipnote.dev/random' },
-            caption: `☕Random Coffee☕`,
-            footer: XeonBotInc.user.name,
+            caption: `☕قائمة القهوة☕`,
+            footer: JirayaBot.user.name,
             buttons: buttons,
             headerType: 4
         }
-        XeonBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
+        JirayaBot.sendMessage(m.chat, buttonMessage, { quoted: m })
     }
 
 break
@@ -2002,6 +2002,39 @@ break
             }
             break
 
+//FUNCIONES DE BAN Y DESBAN			
+			
+case 'ban':
+    if (!isGroup) return reply(mess.only.group)
+    if (!isGroupAdmins) return reply(mess.only.admin)
+    if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+    if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
+    mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+    pru = '*\n'
+    for (let _ of mentioned) {
+    pru += `@${_.split('@')[0]}\n`
+    }
+    ban.push(`${mentioned}`)
+    fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+    susp = `『 BANEADO 🚫 』\n\n◉Nombre: @${mentioned[0].split('@')[0]}\n◉Razon: Spam\n\n*Usted a sido baneado del uso del bot, no podra usar el bot hasta nuevo aviso*`
+    mentions(`${susp}`, mentioned, true)   
+    break
+    
+    case 'desban':
+    if (!isGroup) return reply(mess.only.group)
+    if (!isGroupAdmins) return reply(mess.only.admin)
+    if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+    if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
+    mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+    pru = '*\n'
+    for (let _ of mentioned) {
+    pru += `@${_.split('@')[0]}\n`
+    }
+    ban.splice(`${mentioned}`)
+    fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+    susp = `『 DESBANEADO ✅ 』\n\n◉Nombre: @${mentioned[0].split('@')[0]}\n\n*Se te a retirado el BAN ya puedes usar el bot*`
+    mentions(`${susp}`, mentioned, true)   
+    break		
 //══════════[ LEVELING FEATURES ]══════════//
 
 	case 'لفل':
@@ -2281,7 +2314,7 @@ case 'rate':
 					const kah = apa[Math.floor(Math.random() * apa.length)]
 					JirayaBot.sendMessage(from, 'السؤال : *'+apakah+'*\n\nالجواب : '+ kah, text, { quoted: mek })
 					break
-case 'غبي':
+case 'ggiuغبي':
       case 'ffadsاحمق':
       case 'asfذكي':
       case 'afdsوسيم':
