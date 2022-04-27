@@ -187,6 +187,7 @@ module.exports = JirayaBot = async (JirayaBot, mek, _welkom) => {
 		const isAntiLink = isGroup ? _antilink.includes(from) : false
 		const isWelkom = isGroup ? _welkom.includes(from) : false
 		const isAntiVirtex = isGroup ? _antivirtex.includes(from) : false
+        const isgugImg = isGroup ? _gugImg.includes(from) : false
 		const isNsfw = isGroup ? _nsfw.includes(from) : false
 		const isOwner = ownerNumber.includes(sender)
         const isBanned = ban.includes(sender)
@@ -1870,6 +1871,12 @@ break
 case 'صورة':
 case 'googleimage':
 case 'googleimg':
+if (!isGroup) return reply(mess.only.group)
+if (!isGroupAdmins && !mek.key.fromMe) return reply(mess.only.admin)
+if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+if (!q) return reply(`اختر تفعيل ام تعطيل`)
+if (args[0].toLowerCase() === 'تفعيل'){
+if (isgugImg) return reply(`مفعل مسبقا`)
 if (args.length > 2) return reply('عن اي صورة تبحث؟')
 reply(mess.wait)
 teks = args.join(' ')
