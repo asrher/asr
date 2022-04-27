@@ -111,6 +111,7 @@ const _nsfw = JSON.parse(fs.readFileSync('./database/nsfw.json'))
 const setik = JSON.parse(fs.readFileSync('./database/setik.json'))
 const vien = JSON.parse(fs.readFileSync('./database/vien.json'))
 const imagi = JSON.parse(fs.readFileSync('./database/imagi.json'))
+const ban = JSON.parse(fs.readFileSync('./database/banned.json'));
 
 //══════════[ TIME ]══════════//
 
@@ -188,6 +189,7 @@ module.exports = JirayaBot = async (JirayaBot, mek, _welkom) => {
 		const isAntiVirtex = isGroup ? _antivirtex.includes(from) : false
 		const isNsfw = isGroup ? _nsfw.includes(from) : false
 		const isOwner = ownerNumber.includes(sender)
+        const isBanned = ban.includes(sender)
 		const isMybot = isOwner || mek.key.fromMe
 		let bio_nya = await JirayaBot.getStatus(sender)
 		try {
@@ -497,36 +499,7 @@ for (let anji of setik){
    	     }
 
 	//══════════[ Leveling Function ]══════════//
-	
-            if (isGroup) {
-            const currentLevel = getLevelingLevel(sender)
-            const checkId = getLevelingId(sender)
-            try {
-                if (currentLevel === undefined && checkId === undefined) addLevelingId(sender)
-                const amountXp = Math.floor(Math.random() * 10000) + 100000
-                const requiredXp = 5000000 * (Math.pow(2, currentLevel) - 1)
-                var getLevel = getLevelingLevel(sender)
-                addLevelingXp(sender, amountXp)
-                if (requiredXp <= getLevelingXp(sender)) {
-                addLevelingLevel(sender, 1)   
-                var lvlup = (`╭───「 *🥳ترقية المستوى🥳* 」
-│
-├ 💜 الاسم : ${pushname}
-├ 📱 الرقم : ${sender.split('@')[0]}
-├ 🏅 رتبة : ${role}
-├ 🔖 اكس بي (XP) : ${getLevelingXp(sender)}
-├ 💠 المستوى𝗹  : ${getLevelingLevel(sender)}
-│
-╰───「 *🥳ترقية المستوى🥳* 」`)
-		  but = [{ buttonId: `!menu`, buttonText: { displayText: 'الاوامر 🗃️' }, type: 1 }]
-          sendButton(from, lvlup, '*جيرايا*', but)
 
-                }
-            } catch (err) {
-                console.error(err)
-            }
-        }        
-        
 
 //══════════[ Antilink & Antivirtex ]══════════//
 
@@ -1779,7 +1752,7 @@ break
 				break
 				
 //══════════[ OTHER FEATURES ]══════════//
-case 'owner':
+case 'مطور':
 
 members_ids = []
 for (let mem of groupMembers) {
@@ -2005,36 +1978,37 @@ break
 //FUNCIONES DE BAN Y DESBAN			
 			
 case 'ban':
-    if (!isGroup) return reply(mess.only.group)
-    if (!isGroupAdmins) return reply(mess.only.admin)
-    if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-    if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
-    mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
-    pru = '*\n'
-    for (let _ of mentioned) {
-    pru += `@${_.split('@')[0]}\n`
-    }
-    ban.push(`${mentioned}`)
-    fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
-    susp = `『 BANEADO 🚫 』\n\n◉Nombre: @${mentioned[0].split('@')[0]}\n◉Razon: Spam\n\n*Usted a sido baneado del uso del bot, no podra usar el bot hasta nuevo aviso*`
-    mentions(`${susp}`, mentioned, true)   
-    break
-    
-    case 'desban':
-    if (!isGroup) return reply(mess.only.group)
-    if (!isGroupAdmins) return reply(mess.only.admin)
-    if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-    if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
-    mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
-    pru = '*\n'
-    for (let _ of mentioned) {
-    pru += `@${_.split('@')[0]}\n`
-    }
-    ban.splice(`${mentioned}`)
-    fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
-    susp = `『 DESBANEADO ✅ 』\n\n◉Nombre: @${mentioned[0].split('@')[0]}\n\n*Se te a retirado el BAN ya puedes usar el bot*`
-    mentions(`${susp}`, mentioned, true)   
-    break		
+if (!isGroup) return reply(mess.only.group)
+if (!isGroupAdmins) return reply(mess.only.admin)
+if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
+mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+pru = '*\n'
+for (let _ of mentioned) {
+pru += `@${_.split('@')[0]}\n`
+}
+ban.push(`${mentioned}`)
+fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+susp = `『 BANEADO 🚫 』\n\n◉Nombre: @${mentioned[0].split('@')[0]}\n◉Razon: Spam\n\n*Usted a sido baneado del uso del bot, no podra usar el bot hasta nuevo aviso*`
+mentions(`${susp}`, mentioned, true)   
+break
+
+case 'desban':
+if (!isGroup) return reply(mess.only.group)
+if (!isGroupAdmins) return reply(mess.only.admin)
+if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
+mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+pru = '*\n'
+for (let _ of mentioned) {
+pru += `@${_.split('@')[0]}\n`
+}
+ban.splice(`${mentioned}`)
+fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+susp = `『 DESBANEADO ✅ 』\n\n◉Nombre: @${mentioned[0].split('@')[0]}\n\n*Se te a retirado el BAN ya puedes usar el bot*`
+mentions(`${susp}`, mentioned, true)   
+break		
+				
 //══════════[ LEVELING FEATURES ]══════════//
 
 	case 'لفل':
@@ -2475,7 +2449,6 @@ watak = body.slice(1)
     "هل تمتلك نفسه الحب لكل إخوتك ؟",
     "هل سبق لك ودمرت حياة أحد أقاربك ؟",
     "من هو الشخص الذي تأتمنه على كل أسرارك ؟",
-    "ما شعورك في حالة معرفتك بحب صديقك لأختك ؟",
     "هل تحكم على الأشخاص بسبب ملابسهم ؟",
     "ماذا يلفت إنتباهك ؟",
     "هل تمتلك شخصية صادقة أم منافقة ؟",
@@ -2570,7 +2543,7 @@ watak = body.slice(1)
     "💠↲ما هوا أسم عائلة ميناتو؟"
 ]
               const trut = truth[Math.floor(Math.random() * truth.length)]
-              buffer = await getBuffer(`https://i.ibb.co/DK90KFq/f16edcb49c56db043bef00f778ad4496.jpg`)
+              buffer = await getBuffer(`https://i.ibb.co/9bg6Qzn/quiz-anime-840x600.jpg`)
               JirayaBot.sendMessage(from, buffer, image, { quoted: mek, caption: '_*سؤال*_\n'+ trut })
               break
               
@@ -2692,17 +2665,17 @@ anuoke112 = body.slice(11)
 JirayaBot.updateProfileName(anuoke112)
 reply(`تم تغيير اسم البوت ${body.slice(11)}`)
 break
-case 'public':
+case 'عام':
 if (!mek.key.fromMe && !isOwner) return reply('اطلب من جيرايا')
 if (self === false) return
 self = false
-reply(`\`\`\`MODE - PUBLIC\`\`\``)
+reply(`\`\`\`يمكنك استخدامي الان\`\`\``)
 break
-case 'self':
+case 'اسكت':
 if (!mek.key.fromMe && !isOwner) return reply('دز بس، شتبي؟')
 if (self === true) return
 self = true
-reply(`\`\`\`MODE - SELF\`\`\``)
+reply(`\`\`\`تم\`\`\``)
 break
 case 'autoread':
 if (!mek.key.fromMe && !isOwner) return reply(mess.only.owner)
