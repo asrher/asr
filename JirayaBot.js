@@ -111,7 +111,6 @@ const _nsfw = JSON.parse(fs.readFileSync('./database/nsfw.json'))
 const setik = JSON.parse(fs.readFileSync('./database/setik.json'))
 const vien = JSON.parse(fs.readFileSync('./database/vien.json'))
 const imagi = JSON.parse(fs.readFileSync('./database/imagi.json'))
-const ban = JSON.parse(fs.readFileSync('./database/banned.json'));
 
 //══════════[ TIME ]══════════//
 
@@ -187,10 +186,8 @@ module.exports = JirayaBot = async (JirayaBot, mek, _welkom) => {
 		const isAntiLink = isGroup ? _antilink.includes(from) : false
 		const isWelkom = isGroup ? _welkom.includes(from) : false
 		const isAntiVirtex = isGroup ? _antivirtex.includes(from) : false
-        const isgugImg = isGroup ? _gugImg.includes(from) : false
 		const isNsfw = isGroup ? _nsfw.includes(from) : false
 		const isOwner = ownerNumber.includes(sender)
-        const isBanned = ban.includes(sender)
 		const isMybot = isOwner || mek.key.fromMe
 		let bio_nya = await JirayaBot.getStatus(sender)
 		try {
@@ -498,10 +495,7 @@ for (let anji of setik){
    	     } else if (levelRole <= 25) {
    	         role = 'العم'
    	     }
-
-	//══════════[ Leveling Function ]══════════//
-
-
+            
 //══════════[ Antilink & Antivirtex ]══════════//
 
 if (budy.includes("https://chat.whatsapp.com/")) {
@@ -1753,7 +1747,7 @@ break
 				break
 				
 //══════════[ OTHER FEATURES ]══════════//
-case 'مطور':
+case 'owner':
 
 members_ids = []
 for (let mem of groupMembers) {
@@ -1769,7 +1763,7 @@ JirayaBot.sendMessage(from, {displayName: `The owner ${botname}`, vcard: vcard2}
 { quoted: fgi, 
 })
 break
-case 'owner':
+case 'مطور':
 
 members_ids = []
 for (let mem of groupMembers) {
@@ -1871,12 +1865,6 @@ break
 case 'صورة':
 case 'googleimage':
 case 'googleimg':
-if (!isGroup) return reply(mess.only.group)
-if (!isGroupAdmins && !mek.key.fromMe) return reply(mess.only.admin)
-if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-if (!q) return reply(`اختر تفعيل ام تعطيل`)
-if (args[0].toLowerCase() === 'تفعيل'){
-if (isgugImg) return reply(`مفعل مسبقا`)
 if (args.length > 2) return reply('عن اي صورة تبحث؟')
 reply(mess.wait)
 teks = args.join(' ')
@@ -1985,37 +1973,36 @@ break
 //FUNCIONES DE BAN Y DESBAN			
 			
 case 'ban':
-if (!isGroup) return reply(mess.only.group)
-if (!isGroupAdmins) return reply(mess.only.admin)
-if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
-mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
-pru = '*\n'
-for (let _ of mentioned) {
-pru += `@${_.split('@')[0]}\n`
-}
-ban.push(`${mentioned}`)
-fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
-susp = `『 BANEADO 🚫 』\n\n◉Nombre: @${mentioned[0].split('@')[0]}\n◉Razon: Spam\n\n*Usted a sido baneado del uso del bot, no podra usar el bot hasta nuevo aviso*`
-mentions(`${susp}`, mentioned, true)   
-break
-
-case 'desban':
-if (!isGroup) return reply(mess.only.group)
-if (!isGroupAdmins) return reply(mess.only.admin)
-if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
-mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
-pru = '*\n'
-for (let _ of mentioned) {
-pru += `@${_.split('@')[0]}\n`
-}
-ban.splice(`${mentioned}`)
-fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
-susp = `『 DESBANEADO ✅ 』\n\n◉Nombre: @${mentioned[0].split('@')[0]}\n\n*Se te a retirado el BAN ya puedes usar el bot*`
-mentions(`${susp}`, mentioned, true)   
-break		
-				
+    if (!isGroup) return reply(mess.only.group)
+    if (!isGroupAdmins) return reply(mess.only.admin)
+    if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+    if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
+    mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+    pru = '*\n'
+    for (let _ of mentioned) {
+    pru += `@${_.split('@')[0]}\n`
+    }
+    ban.push(`${mentioned}`)
+    fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+    susp = `『 BANEADO 🚫 』\n\n◉Nombre: @${mentioned[0].split('@')[0]}\n◉Razon: Spam\n\n*Usted a sido baneado del uso del bot, no podra usar el bot hasta nuevo aviso*`
+    mentions(`${susp}`, mentioned, true)   
+    break
+    
+    case 'desban':
+    if (!isGroup) return reply(mess.only.group)
+    if (!isGroupAdmins) return reply(mess.only.admin)
+    if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+    if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
+    mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+    pru = '*\n'
+    for (let _ of mentioned) {
+    pru += `@${_.split('@')[0]}\n`
+    }
+    ban.splice(`${mentioned}`)
+    fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+    susp = `『 DESBANEADO ✅ 』\n\n◉Nombre: @${mentioned[0].split('@')[0]}\n\n*Se te a retirado el BAN ya puedes usar el bot*`
+    mentions(`${susp}`, mentioned, true)   
+    break		
 //══════════[ LEVELING FEATURES ]══════════//
 
 	case 'لفل':
