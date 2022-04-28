@@ -146,7 +146,7 @@ module.exports = JirayaBot = async (JirayaBot, mek, _welkom) => {
     	mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
         const content = JSON.stringify(mek.message)
 		const from = mek.key.remoteJid
-		const { text, extendedText, contact, contactsArray, groupInviteMessage, listMessage, buttonsMessage, location, liveLocation, image, video, sticker, document, audio, product, quotedMsg } = MessageType
+		const { text, extendedText, contact, contactsArray, groupInviteMessage, listMessage, buttonsMessage, location, liveLocation, image, video, sticker, document, audio, gif, product, quotedMsg } = MessageType
 		const tanggal = moment.tz('Asia/Kolkata').format('dddd') + ', ' + moment.tz('Asia/Kolkata').format('LL')
 		const time = moment().tz('Asia/Kolkata').format("HH:mm:ss")
 		const timeMak = moment().tz('Asia/Kolkata').format("HH:mm:ss");
@@ -1538,26 +1538,26 @@ just give credit / add in tqtq
                    case 'عناق':  
                    anupandao = await fetchJson(`https://some-random-api.ml/animu/hug`)
                    anu1 = await getBuffer(anupandao.link)
-                   JirayaBot.sendMessage(from, anu1, image, {caption: `تمم 🦦`, quoted: mek})
+                   JirayaBot.sendMessage(from, anu1, gif, {caption: `تمم 🦦`, quoted: mek})
                    break
                    case 'غمز':  
                    anupandao = await fetchJson(`https://some-random-api.ml/animu/wink`)
                    anu1 = await getBuffer(anupandao.link)
-                   JirayaBot.sendMessage(from, anu1, image, {caption: `تمم 🦦`, quoted: mek})
+                   JirayaBot.sendMessage(from, anu1, gif, {caption: `تمم 🦦`, quoted: mek})
                    break
                    case 'لمس':  
                    anupandao = await fetchJson(`https://some-random-api.ml/animu/pat`)
                    anu1 = await getBuffer(anupandao.link)
-                   JirayaBot.sendMessage(from, anu1, image, {caption: `تمم 🦦`, quoted: mek})
+                   JirayaBot.sendMessage(from, anu1, gif, {caption: `تمم 🦦`, quoted: mek})
                    break
                    case 'بيكاتشو':  
                    anupandao = await fetchJson(`https://some-random-api.ml/img/Pikachu`)
                    anu1 = await getBuffer(anupandao.link)
-                   JirayaBot.sendMessage(from, anu1, image, {caption: `تمم 🦦`, quoted: mek})
+                   JirayaBot.sendMessage(from, anu1, gif, {caption: `تمم 🦦`, quoted: mek})
                    break
                    case 'ميمز':  
-                   anupandao = await fetchJson(`https://some-random-api.ml/meme`)
-                   anu1 = await getBuffer(anupandao.link)
+                   anupandao = await fetchJson(`https://api.waifu.pics/sfw/waifu`)
+                   anu1 = await getBuffer(anupandao.url)
                    JirayaBot.sendMessage(from, anu1, image, {caption: `تمم 🦦`, quoted: mek})
                    break
                    case 'طائر': 
