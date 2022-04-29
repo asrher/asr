@@ -1,3 +1,4 @@
+
 //═══════════════════════════════════════════════════════//
 //If you want to recode, reupload
 //or copy the codes,
@@ -2671,7 +2672,7 @@ watak = body.slice(1)
               
 //══════════[ OWNER FEATURES ]══════════//
 
-case 'bc':
+case 'انشر1':
              
              if (!isOwner && !mek.key.fromMe) return  reply(mess.only.owner)
              if (args.length < 1) return reply('وين الكتابة يخي؟')
@@ -2682,26 +2683,21 @@ case 'bc':
              for (let _ of anu100) {
              JirayaBot.sendMessage(_.jid, bc100, image, {quoted: fgi, caption: `*「 اعلان عن البوت 」*\n\n${body.slice(4)}`})
 }
-             reply('تم اذاعة')
+             reply('تم النشر.')
              } else {
              for (let _ of anu100) {
              JirayaBot.sendMessage(_.jid, 
 			{"contentText": `*「 اعلان عن البوت 」*\n\n${body.slice(4)}`,
 			"footerText": `${tanggal}`,
-			"buttons": [
-			{"buttonId": `${prefix}menu`,
-			"buttonText": {"displayText": "🗃️ الاوامر"
-			},"type": "RESPONSE"}
-			], "headerType": 'LOCATION',
 			locationMessage: { degreesLatitude: '',
 			degreesLongitude: '',
 			jpegThumbnail: fakeimage,
 			}}, MessageType.buttonsMessage )
 }
-             reply('تم اذاعة')
+             reply('تم النشر.')
 }
              break
-case 'bc2':
+case 'انشر':
 
 if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
 if (args.length < 1) return reply('The text?')
@@ -2712,29 +2708,29 @@ buff = await JirayaBot.downloadMediaMessage(encmedia12345)
 for (let _ of anubc2) {
 JirayaBot.sendMessage(_.jid, buff, image, { viewOnce:true, caption: `${body.slice(4)}`})
 }
-reply(`تم اذاعة ✓${body.slice(4)}`)
+reply(`تم النشر. ✓${body.slice(4)}`)
 } else if (isMedia && !mek.message.videoMessage || isQuotedVideo) {
 const encmediaki = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
 buff = await JirayaBot.downloadMediaMessage(encmediaki)
 for (let _ of anubc2) {
 JirayaBot.sendMessage(_.jid, buff, video, { viewOnce:true, caption: `${body.slice(4)}`})
 }
-reply(`تم اذاعة ✓${body.slice(4)}`)
+reply(`تم النشر. ✓${body.slice(4)}`)
 } else if (isMedia && !mek.message.videoMessage || isQuotedVideo) {
 const encmediadirk = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
 buff = await JirayaBot.downloadMediaMessage(encmediadirk)
 for (let _ of anubc2) {
 JirayaBot.sendMessage(_.jid, buff, video, { mimetype: Mimetype.gif, quoted: finv, contextInfo: { forwardingScore: 508, isForwarded: true}, caption: `${body.slice(4)}` })
 }
-reply(` تم اذاعة✓${body.slice(4)}`)
+reply(` تم النشر.✓${body.slice(4)}`)
 } else {
 for (let _ of anubc2) {
-sendMess(_.jid, `Bot Broadcast\n\n${body.slice(4)}`)
+sendMess(_.jid, `\n\n${body.slice(4)}`)
 }
-reply(`تم اذاعة`)
+reply(`تم النشر.`)
 }
 break
-case 'bcgc':
+case 'انشر2':
 
 if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
 if (args.length < 1) return reply('وين الكتابة يخي؟ ?')
@@ -2747,9 +2743,9 @@ JirayaBot.sendMessage(_.jid, bcgc, image, { caption: `*「 اعلان عن ال�
 reply('')
 } else {
 for (let _ of groupMembers) {
-sendMess(_.jid, `*「 اعلان عن البوت 」*\n*Group* : ${groupName}\n\n${body.slice(6)}`)
+sendMess(_.jid, `*「 اعلان عن البوت 」*\n*المجموعه* : ${groupName}\n\n${body.slice(6)}`)
 }
-reply('تم مجموعة البث')
+reply('تم الارسال لاعضاء المجموعة')
 }
 break
 case 'clearallhj':
