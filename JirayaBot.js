@@ -1579,7 +1579,7 @@ case 'تطقيم':
 case 'ppcouple':
 
 anucpp = await fetchJson(`https://raw.githubusercontent.com/iamriz7/kopel_/main/kopel.json?apikey=${dhakey}`)
-cowo = await getBuffer(anucpp.result.male)
+cowo = await getBuffer(anucpp.male)
 Cowok = `_هذا للولد_`
 sendButImage(from, Cowok, `*_${tanggal} - ${time}_*`, cowo, [                      
 {
@@ -1590,7 +1590,7 @@ displayText: `⬅️ التالي`,
 type: 1,
 },
 ]);
-cewe = await getBuffer(anu.result.female)
+cewe = await getBuffer(anu.female)
 Cewek = `_وذا للبنت_`
 sendButImage(from, Cewek, `*_${tanggal} - ${time}_*`, cewe, [                      
 {
@@ -1607,26 +1607,26 @@ case 'قهوة': case 'kopi': {
             {buttonId: `قهوة`, buttonText: {displayText: '➡️الصورة  التالية➡️'}, type: 1}
         ]
         let buttonMessage = {
-            image: { url: 'https://coffee.alexflipnote.dev/random' },
+            image: { file: 'https://coffee.alexflipnote.dev/random' },
             caption: `☕قائمة القهوة☕`,
             footer: JirayaBot.user.name,
             buttons: buttons,
             headerType: 4
         }
-        JirayaBot.sendMessage(m.chat, buttonMessage, { quoted: m })
+        JirayaBot.sendMessage(from, file, image, {caption: `تمم 🦦`, quoted: mek})
     }
 
 break
-case 'wallpaperhacker':
-case 'wallpaperhacker2':
-case 'wallpaperharley':
-case 'wallpaperjoker':
-case 'wallpaperpubg':
-case 'wallpaperhp':
-case 'wallpaperhp2':
-case 'wallpaperkpop':
-case 'wallpaperblackpink':
-case 'wallpapergame':
+case 'wallpaperhackerssd':
+case 'wallpaperhacker2sd':
+case 'wallpaperharleyds':
+case 'wallpaperjokerds':
+case 'wallpaperpubgds':
+case 'wallpaperhpd':
+case 'wallpaperhp2ds':
+case 'wallpaperkpopds':
+case 'wallpaperblackpinkds':
+case 'wallpapergameds':
 
 reply(mess.wait)
 buffer = await getBuffer(`https://apidhani.herokuapp.com/api/randomimage/${command}?apikey=${dhakey}`)
@@ -1736,7 +1736,16 @@ break
                  highschooldxd = await getBuffer(randKey.result)
                  JirayaBot.sendMessage(from, highschooldxd, image, {quoted: mek, caption: 'تم ان شاء الله يعجبك.'})
 				break
-				 case 'انمي1':
+                case '1انمي':
+				 JirayaBot.updatePresence(from, Presence.composing) 
+				 data = fs.readFileSync('./lib/jiraya.js');
+                 jsonData = JSON.parse(data);
+                 randIndex = Math.floor(Math.random() * jsonData.length);
+                 randKey = jsonData[randIndex];
+                 highschooldxd = await getBuffer(randKey.result)
+                 JirayaBot.sendMessage(from, highschooldxd, image, {quoted: mek, caption: 'تم ان شاء الله يعجبك.'})
+				break
+				 case 'انمي2':
 				 JirayaBot.updatePresence(from, Presence.composing) 
 				 data = fs.readFileSync('./lib/lovelive.js');
                  jsonData = JSON.parse(data);
@@ -2264,7 +2273,7 @@ case 'rate':
 					const te = ra[Math.floor(Math.random() * ra.length)]
 					JirayaBot.sendMessage(from, 'تست نشوف : *'+rate+'*\n\nنسبة الحب المتوقعة : '+ te+'%', text, { quoted: mek})
 					break
-                case 'يمكنني':
+                case 'اقدر':
 					bisakah = body.slice(1)
 					const bisa =['اجل يمكنك ذالك', 'لا كنسل', ' ما في مستحيل','اذا واثق من نفسك يب','ممممم حسب الوضع']
 					const keh = bisa[Math.floor(Math.random() * bisa.length)]
@@ -2753,8 +2762,8 @@ JirayaBot.deleteChat(_.jid)
 }
 textImg('Successfully deleted all chat')
 break
-case 'setbotpp':
-case 'setppbot':
+case 'حطه':
+case 'setppbotgh':
 if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
 if (!isQuotedImage) return reply(`منشن عالصورة ${prefix}الي تبي احط`)
 enmediaheheh = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
@@ -2762,8 +2771,8 @@ media = await JirayaBot.downloadAndSaveMediaMessage(enmediaheheh, './database/sa
 await JirayaBot.updateProfilePicture(botNumber, media)
 reply('تمم يحب')
 break
-case 'setbotbiougj':
-case 'setbiohg':
+case 'setbotbiougjhhj':
+case 'حطه1':
 if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
 if (args.length < 1) return reply('The text?')
 iyek = body.slice(8)
