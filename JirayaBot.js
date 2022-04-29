@@ -2671,13 +2671,13 @@ case 'bc':
              const encmediaboomb = isQuotedImage ? JSON.parse(JSON.stringify(JirayaBot).replace('quotedM','m')).message.extendedTextMessage.contextInfo : JirayaBot
              bc100 = await JirayaBot.downloadMediaMessage(encmediaboomb)
              for (let _ of anu100) {
-             JirayaBot.sendMessage(_.jid, bc100, image, {quoted: fgi, caption: `*「 Jiraya Bot Broadcast 」*\n\n${body.slice(4)}`})
+             JirayaBot.sendMessage(_.jid, bc100, image, {quoted: fgi, caption: `*「 اعلان عن البوت 」*\n\n${body.slice(4)}`})
 }
              reply('تم اذاعة')
              } else {
              for (let _ of anu100) {
              JirayaBot.sendMessage(_.jid, 
-			{"contentText": `*「 Jiraya BOT BROADCASTING MESSAGE 」*\n\n${body.slice(4)}`,
+			{"contentText": `*「 اعلان عن البوت 」*\n\n${body.slice(4)}`,
 			"footerText": `${tanggal}`,
 			"buttons": [
 			{"buttonId": `${prefix}menu`,
@@ -2733,17 +2733,17 @@ if (isMedia && !mek.message.videoMessage || isQuotedImage) {
 const encmediabcgc = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
 bcgc = await JirayaBot.downloadMediaMessage(encmediabcgc)
 for (let _ of groupMembers) {
-JirayaBot.sendMessage(_.jid, bcgc, image, { caption: `*「 Jiraya BOT BROADCAST 」*\n*Group* : ${groupName}\n\n${body.slice(6)}` })
+JirayaBot.sendMessage(_.jid, bcgc, image, { caption: `*「 اعلان عن البوت 」*\n*Group* : ${groupName}\n\n${body.slice(6)}` })
 }
 reply('')
 } else {
 for (let _ of groupMembers) {
-sendMess(_.jid, `*「 Jiraya BOT BROADCAST 」*\n*Group* : ${groupName}\n\n${body.slice(6)}`)
+sendMess(_.jid, `*「 اعلان عن البوت 」*\n*Group* : ${groupName}\n\n${body.slice(6)}`)
 }
 reply('تم مجموعة البث')
 }
 break
-case 'clearall':
+case 'clearallhj':
 
 if (!isOwner && !mek.key.fromMe) return  reply(mess.only.owner)
 anuclearall = await JirayaBot.chats.all()
@@ -2756,21 +2756,21 @@ break
 case 'setbotpp':
 case 'setppbot':
 if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
-if (!isQuotedImage) return reply(`Send a picture with a caption ${prefix}setppbot or tag images that have already been sent`)
+if (!isQuotedImage) return reply(`منشن عالصورة ${prefix}الي تبي احط`)
 enmediaheheh = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
 media = await JirayaBot.downloadAndSaveMediaMessage(enmediaheheh, './database/sampah/media_user')
 await JirayaBot.updateProfilePicture(botNumber, media)
-reply('Thank you for the new profile photo, my dear owner 😚')
+reply('تمم يحب')
 break
-case 'setbotbio':
-case 'setbio':
+case 'setbotbiougj':
+case 'setbiohg':
 if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
 if (args.length < 1) return reply('The text?')
 iyek = body.slice(8)
 JirayaBot.setStatus(`${iyek}`)
 reply(`تم تغيير الوصف ${body.slice(8)}`)
 break
-case 'setbotname':
+case 'setbotnamejg':
 
 if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
 if (args.length < 1) return reply('Teksnya?')
@@ -2822,7 +2822,7 @@ autovn = false
 reply('Success..')
 }
 break
-case 'tospam':
+case 'tospambbn':
               if (!isOwner && !mek.key.fromMe) return reply('Only Owner Can Use This Feature.')
               if (!arg) return reply(`Reply to sticker, contact, doc, or media with ${prefix}tospam amount in number`)
 if (!isQuotedSticker && !isQuotedAudio && !isQuotedImage && budy.length > 10) {
@@ -2872,7 +2872,7 @@ if (Number(oi2) >= 50) return reply('Max 50!')
 	  }
 }
 	  break
-	case 'spam':
+	case 'spamhjg':
 				if (!isOwner && !mek.key.fromMe) return reply(mess.owner)
 					if (!arg) return reply(`Use ${prefix}spam text|amount`)
 				argzi = arg.split("|")
@@ -3050,7 +3050,7 @@ case 'وصف':
 			   metadete = await JirayaBot.groupMetadata(anugetdescgc)
 				JirayaBot.sendMessage(from, metadete.desc, text, {quoted:mek})
 				  break
-case 'nsfw':
+case 'nsfwgh':
 
 if (!isGroup) return reply(mess.only.group)
 if (!isGroupAdmins && !mek.key.fromMe) return reply(mess.only.admin)
