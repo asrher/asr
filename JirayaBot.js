@@ -1,4 +1,3 @@
-
 //═══════════════════════════════════════════════════════//
 //If you want to recode, reupload
 //or copy the codes,
@@ -2672,7 +2671,7 @@ watak = body.slice(1)
               
 //══════════[ OWNER FEATURES ]══════════//
 
-case 'انشر1':
+case 'نش':
              
              if (!isOwner && !mek.key.fromMe) return  reply(mess.only.owner)
              if (args.length < 1) return reply('وين الكتابة يخي؟')
@@ -2689,6 +2688,11 @@ case 'انشر1':
              JirayaBot.sendMessage(_.jid, 
 			{"contentText": `*「 اعلان عن البوت 」*\n\n${body.slice(4)}`,
 			"footerText": `${tanggal}`,
+			"buttons": [
+			{"buttonId": `${prefix}menu`,
+			"buttonText": {"displayText": "🗃️ الاوامر"
+			},"type": "RESPONSE"}
+			], "headerType": 'LOCATION',
 			locationMessage: { degreesLatitude: '',
 			degreesLongitude: '',
 			jpegThumbnail: fakeimage,
@@ -2697,10 +2701,10 @@ case 'انشر1':
              reply('تم النشر.')
 }
              break
-case 'انشر':
+case 'نشر':
 
 if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
-if (args.length < 1) return reply('The text?')
+if (args.length < 1) return reply('الكتابة ?')
 anubc2 = await JirayaBot.chats.all()
 if (isMedia && !mek.message.videoMessage || isQuotedImage) {
 const encmedia12345 = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
@@ -2730,7 +2734,7 @@ sendMess(_.jid, `\n\n${body.slice(4)}`)
 reply(`تم النشر.`)
 }
 break
-case 'انشر2':
+case 'نشر2':
 
 if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
 if (args.length < 1) return reply('وين الكتابة يخي؟ ?')
