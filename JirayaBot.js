@@ -1772,7 +1772,7 @@ JirayaBot.sendMessage(from, {displayName: `The owner ${botname}`, vcard: vcard2}
 { quoted: fgi, 
 })
 break
-case 'مطور':
+case 'owner':
 
 members_ids = []
 for (let mem of groupMembers) {
