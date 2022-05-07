@@ -1823,7 +1823,7 @@ Type *surrender* to surrender and admit defeat`
     }
     }
     break
-    
+
 case 'waifu':
 case 'yumeko':
 case 'fanart':
@@ -2218,6 +2218,7 @@ case 'memegenerator': case 'memegen':{
 case 'takestick':
 case 'زرف':
 					case 'take':
+                        if (!isOwner && !mek.key.fromMe) return  reply(mess.only.owner)
 						if (!isQuotedSticker) return reply(`وين ملصق الي تبي تزرفه؟ *${prefix}+الحقوق حط بالانجليزي بدون ايموجي.*`)
 						ppp = `${args.join(' ')}`
 						const encmediaoo1 = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
