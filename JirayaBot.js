@@ -581,7 +581,7 @@ teks =
 `_سلام عليكم_
 _بوت جيرايا الافضل_
 _اتمنى ${prefix}افيدكم_`
-JirayaBot.sendMessage(from, { contentText: `${teks}`, footerText: `${menu}`, buttons: [{ buttonId: `${prefix}command`, buttonText: { displayText: 'الاوامر 🗃️' }, type: 1 },{ buttonId: `${prefix}developer`, buttonText: { displayText: 'المطور 👨🏼‍💻' }, type: 1 } ], headerType: 'LOCATION', locationMessage: { degreesLatitude: '', degreesLongitude: '', jpegThumbnail: fakeimage, contextInfo: {mentionedJid: [senderr,pemilik]}}}, 'buttonsMessage')
+JirayaBot.sendMessage(from, { contentText: `${teks}`, footerText: `${menu}`, buttons: [{ buttonId: `${prefix}command`, buttonText: { displayText: 'الاوامر 🗃️' }, type: 1 },{ buttonId: `${prefix}owner`, buttonText: { displayText: 'المطور 👨🏼‍💻' }, type: 1 } ], headerType: 'LOCATION', locationMessage: { degreesLatitude: '', degreesLongitude: '', jpegThumbnail: fakeimage, contextInfo: {mentionedJid: [senderr,pemilik]}}}, 'buttonsMessage')
 break
 case 'command':
 
@@ -1217,6 +1217,71 @@ but = [
 sendButImage(from, menunya, `*_${tanggal} - ${time}_*`, gambar, but)
 break
 
+//TicTacToe\\
+this.game = this.game ? this.game : {}
+let room = Object.values(this.game).find(room => room.id && room.game && room.state && room.id.startsWith('tictactoe') && [room.game.playerX, room.game.playerO].includes(m.sender) && room.state == 'PLAYING')
+if (room) {
+let ok
+let isWin = !1
+let isTie = !1
+let isSurrender = !1
+//reply(`[DEBUG]\n${parseInt(m.text)}`)
+if (!/^([1-9]|(me)?give up|surr?ender|off|skip)$/i.test(m.text)) return
+isSurrender = !/^[1-9]$/.test(m.text)
+if (m.sender !== room.game.currentTurn) { 
+if (!isSurrender) return !0
+}
+if (!isSurrender && 1 > (ok = room.game.turn(m.sender === room.game.playerO, parseInt(m.text) - 1))) {
+reply({
+'-3': 'Game Has Ended',
+'-2': 'Invalid',
+'-1': 'Invalid Position',
+0: 'Invalid Position',
+}[ok])
+return !0
+}
+if (m.sender === room.game.winner) isWin = true
+else if (room.game.board === 511) isTie = true
+let arr = room.game.render().map(v => {
+return {
+X: '❌',
+O: '⭕',
+1: '1️⃣',
+2: '2️⃣',
+3: '3️⃣',
+4: '4️⃣',
+5: '5️⃣',
+6: '6️⃣',
+7: '7️⃣',
+8: '8️⃣',
+9: '9️⃣',
+}[v]
+})
+if (isSurrender) {
+room.game._currentTurn = m.sender === room.game.playerX
+isWin = true
+}
+let winner = isSurrender ? room.game.currentTurn : room.game.winner
+let str = `Room ID: ${room.id}
+
+${arr.slice(0, 3).join('')}
+${arr.slice(3, 6).join('')}
+${arr.slice(6).join('')}
+
+${isWin ? `@${winner.split('@')[0]} Won!` : isTie ? `Game Over` : `Turn ${['❌', '⭕'][1 * room.game._currentTurn]} (@${room.game.currentTurn.split('@')[0]})`}
+❌: @${room.game.playerX.split('@')[0]}
+⭕: @${room.game.playerO.split('@')[0]}
+
+Typed *surrender* to surrender and admited defeat`
+if ((room.game._currentTurn ^ isSurrender ? room.x : room.o) !== m.chat)
+room[room.game._currentTurn ^ isSurrender ? 'x' : 'o'] = m.chat
+if (room.x !== room.o) await XeonBotInc.sendText(room.x, str, m, { mentions: parseMention(str) } )
+await XeonBotInc.sendText(room.o, str, m, { mentions: parseMention(str) } )
+if (isTie || isWin) {
+delete this.game[room.id]
+}
+}
+
 //══════════[ DOWNLOAD FEATURES ]══════════//
 /*Help case ?
 give credit too / add in at tqtq
@@ -1694,13 +1759,71 @@ break
 //----> ANIME FEATURES <----//
 
 
-                case 'elf':
-                                case 'art':
-                reply(mess.wait)
-                    getBuffer(`https://api.lolhuman.xyz/api/random/${command}?apikey=${Lolhumanbykur}`).then((gambar) => {
-                        JirayaBot.sendMessage(from, gambar, image, { quoted: mek })
-                    })
-                    break
+case 'ttc': case 'ttt': case 'tictactoe': {
+    let TicTacToe = require("./lib/tictactoe")
+    this.game = this.game ? this.game : {}
+    if (Object.values(this.game).find(room => room.id.startsWith('tictactoe') && [room.game.playerX, room.game.playerO].includes(m.sender))) return replay(`You Are Still In The Game`)
+    let room = Object.values(this.game).find(room => room.state === 'WAITING' && (text ? room.name === text : true))
+    if (room) {
+    reply('Partner found!')
+    room.o = m.chat
+    room.game.playerO = m.sender
+    room.state = 'PLAYING'
+    let arr = room.game.render().map(v => {
+    return {
+    X: '❌',
+    O: '⭕',
+    1: '1️⃣',
+    2: '2️⃣',
+    3: '3️⃣',
+    4: '4️⃣',
+    5: '5️⃣',
+    6: '6️⃣',
+    7: '7️⃣',
+    8: '8️⃣',
+    9: '9️⃣',
+    }[v]
+    })
+    let str = `Room ID: ${room.id}
+
+${arr.slice(0, 3).join('')}
+${arr.slice(3, 6).join('')}
+${arr.slice(6).join('')}
+
+Waiting @${room.game.currentTurn.split('@')[0]}
+
+Type *surrender* to surrender and admit defeat`
+    if (room.x !== room.o) await XeonBotInc.sendText(room.x, str, m, { mentions: parseMention(str) } )
+    await XeonBotInc.sendText(room.o, str, m, { mentions: parseMention(str) } )
+    } else {
+    room = {
+    id: 'tictactoe-' + (+new Date),
+    x: m.chat,
+    o: '',
+    game: new TicTacToe(m.sender, 'o'),
+    state: 'WAITING'
+    }
+    if (text) room.name = text
+    reply('Waiting For Partner' + (text ? ` Type The Command Below ${prefix}${command} ${text}` : ''))
+    this.game[room.id] = room
+    }
+    }
+    break
+    case 'delttc': case 'delttt': {
+    this.game = this.game ? this.game : {}
+    try {
+    if (this.game) {
+    delete this.game
+    XeonBotInc.sendText(m.chat, `Successfully Deleted The TicTacToe Session`, m)
+    } else if (!this.game) {
+    reply(`TicTacToe🎮 Session Does Not Exist`)
+    } else reply('?')
+    } catch (e) {
+    reply('Damaged')
+    }
+    }
+    break
+    
 case 'waifu':
 case 'yumeko':
 case 'fanart':
@@ -1734,7 +1857,7 @@ break
                  randIndex = Math.floor(Math.random() * jsonData.length);
                  randKey = jsonData[randIndex];
                  highschooldxd = await getBuffer(randKey.result)
-                 JirayaBot.sendMessage(from, highschooldxd, image, {quoted: mek, caption: 'تم ان شاء الله يعجبك.'})
+                 JirayaBot.sendMessage(from, highschooldxd, image, {quoted: mek, caption: 'تم.'})
 				break
                 case '1انمي':
 				 JirayaBot.updatePresence(from, Presence.composing) 
@@ -1901,7 +2024,7 @@ break
           JirayaBot.sendMessage(from, hah, audio, { mimetype: 'audio/mp4', ptt: true, quoted: mek })
           fs.unlinkSync(ran)
         })
- case 'tomp3':
+ case 'حول1':
 					JirayaBot.updatePresence(from, Presence.composing)
 					if (!isQuotedVideo) return reply('اي فيديو تبي تحول؟')
 					reply(mess.wait)
@@ -2095,7 +2218,6 @@ case 'memegenerator': case 'memegen':{
 case 'takestick':
 case 'زرف':
 					case 'take':
-                        if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
 						if (!isQuotedSticker) return reply(`وين ملصق الي تبي تزرفه؟ *${prefix}+الحقوق حط بالانجليزي بدون ايموجي.*`)
 						ppp = `${args.join(' ')}`
 						const encmediaoo1 = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
@@ -2267,8 +2389,8 @@ return reply(`${e}`)
 break
 
 //══════════[ FUN FEATURES ]══════════//
-case 'rate':
-				case 'wadwqتشبيك':
+case 'rateggh':
+				case 'تشبيك':
 					rate = body.slice(1)
 					const ra =['ميؤوس منكم 🤣💔 1','ميؤوس منكم 🤣💔 2','ميؤوس منكم 🤣💔 3','ميؤوس منكم 🤣💔 4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','74','75','76','77','78','79','80','81','82','83','84','85','86','87','88','89','90','91','92','93','94','95','96','97','98','99','100']
 					const te = ra[Math.floor(Math.random() * ra.length)]
@@ -2361,7 +2483,7 @@ case 'ggiuغبي':
 					const nge = sang[Math.floor(Math.random() * sang.length)]
 					JirayaBot.sendMessage(from, 'Question : *'+sange+'*\n\nAnswer: '+ nge+'%', text, { quoted: mek })
 					break
-                case 'dasfيكرهني':
+                case 'يكرهني':
 					// source code by Jiraya⛔
                   gayy = body.slice(1)
 					const gay =['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','74','75','76','77','78','79','80','81','82','83','84','85','86','87','88','89','90','91','92','93','94','95','96','97','98','99','100']
@@ -2383,14 +2505,14 @@ ganteng = body.slice(1)
 					const teng = gan[Math.floor(Math.random() * gan.length)]
 					JirayaBot.sendMessage(from, 'Question : *'+ganteng+'*\n\nAnswer : '+ teng+'%', text, { quoted: mek })
 					break
-		case 'dfadaيحبني':
+		case 'يحبني':
 					// source code by Jiraya⛔
 cantik = body.slice(1)
 					const can =['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','74','75','76','77','78','79','80','81','82','83','84','85','86','87','88','89','90','91','92','93','94','95','96','97','98','99','100']
 					const tik = can[Math.floor(Math.random() * can.length)]
 					JirayaBot.sendMessage(from, 'السؤال : *'+cantik+'*\n\nAnswer : '+ tik+'%', text, { quoted: mek })
 					break
-		case 'asfasيحبني':
+		case 'يحبني':
 					// source code by Jiraya⛔
 watak = body.slice(1)
 					const wa =['Compassionate','Generous','Grumpy','Forgiving','Obedient','Good','Simp','Kind-Hearted','patient','UwU','top, anyway','Helpful']
