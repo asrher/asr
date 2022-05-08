@@ -581,7 +581,7 @@ teks =
 `_سلام عليكم_
 _بوت جيرايا الافضل_
 _اتمنى ${prefix}افيدكم_`
-JirayaBot.sendMessage(from, { contentText: `${teks}`, footerText: `${menu}`, buttons: [{ buttonId: `${prefix}command`, buttonText: { displayText: 'الاوامر 🗃️' }, type: 1 },{ buttonId: `${prefix}owner`, buttonText: { displayText: 'المطور 👨🏼‍💻' }, type: 1 } ], headerType: 'LOCATION', locationMessage: { degreesLatitude: '', degreesLongitude: '', jpegThumbnail: fakeimage, contextInfo: {mentionedJid: [senderr,pemilik]}}}, 'buttonsMessage')
+JirayaBot.sendMessage(from, { contentText: `${teks}`, footerText: `${menu}`, buttons: [{ buttonId: `${prefix}command`, buttonText: { displayText: 'الاوامر 🗃️' }, type: 1 },{ buttonId: `${prefix}owner`, buttonText: { displayText: '👤 المطور' }, type: 1 } ], headerType: 'LOCATION', locationMessage: { degreesLatitude: '', degreesLongitude: '', jpegThumbnail: fakeimage, contextInfo: {mentionedJid: [senderr,pemilik]}}}, 'buttonsMessage')
 break
 case 'command':
 
@@ -1219,7 +1219,7 @@ break
 
 //TicTacToe\\
 this.game = this.game ? this.game : {}
-let room = Object.values(this.game).find(room => room.id && room.game && room.state && room.id.startsWith('tictactoe') && [room.game.playerX, room.game.playerO].includes(m.sender) && room.state == 'PLAYING')
+let room = Object.values(this.game).find(room => room.id && room.game && room.state && room.id.startsWith('tictactoe') && [room.game.playerX, room.game.playerO].includes(mek.sender) && room.state == 'PLAYING')
 if (room) {
 let ok
 let isWin = !1
@@ -1228,10 +1228,10 @@ let isSurrender = !1
 //reply(`[DEBUG]\n${parseInt(m.text)}`)
 if (!/^([1-9]|(me)?give up|surr?ender|off|skip)$/i.test(m.text)) return
 isSurrender = !/^[1-9]$/.test(m.text)
-if (m.sender !== room.game.currentTurn) { 
+if (mek.sender !== room.game.currentTurn) { 
 if (!isSurrender) return !0
 }
-if (!isSurrender && 1 > (ok = room.game.turn(m.sender === room.game.playerO, parseInt(m.text) - 1))) {
+if (!isSurrender && 1 > (ok = room.game.turn(mek.sender === room.game.playerO, parseInt(m.text) - 1))) {
 reply({
 '-3': 'Game Has Ended',
 '-2': 'Invalid',
@@ -1240,7 +1240,7 @@ reply({
 }[ok])
 return !0
 }
-if (m.sender === room.game.winner) isWin = true
+if (mek.sender === room.game.winner) isWin = true
 else if (room.game.board === 511) isTie = true
 let arr = room.game.render().map(v => {
 return {
@@ -1258,7 +1258,7 @@ O: '⭕',
 }[v]
 })
 if (isSurrender) {
-room.game._currentTurn = m.sender === room.game.playerX
+room.game._currentTurn = mek.sender === room.game.playerX
 isWin = true
 }
 let winner = isSurrender ? room.game.currentTurn : room.game.winner
@@ -1275,8 +1275,8 @@ ${isWin ? `@${winner.split('@')[0]} Won!` : isTie ? `Game Over` : `Turn ${['❌'
 Typed *surrender* to surrender and admited defeat`
 if ((room.game._currentTurn ^ isSurrender ? room.x : room.o) !== m.chat)
 room[room.game._currentTurn ^ isSurrender ? 'x' : 'o'] = m.chat
-if (room.x !== room.o) await XeonBotInc.sendText(room.x, str, m, { mentions: parseMention(str) } )
-await XeonBotInc.sendText(room.o, str, m, { mentions: parseMention(str) } )
+if (room.x !== room.o) await JirayaBot.sendText(room.x, str, m, { mentions: parseMention(str) } )
+await JirayaBot.sendText(room.o, str, m, { mentions: parseMention(str) } )
 if (isTie || isWin) {
 delete this.game[room.id]
 }
@@ -1762,12 +1762,12 @@ break
 case 'ttc': case 'ttt': case 'tictactoe': {
     let TicTacToe = require("./lib/tictactoe")
     this.game = this.game ? this.game : {}
-    if (Object.values(this.game).find(room => room.id.startsWith('tictactoe') && [room.game.playerX, room.game.playerO].includes(m.sender))) return replay(`You Are Still In The Game`)
+    if (Object.values(this.game).find(room => room.id.startsWith('tictactoe') && [room.game.playerX, room.game.playerO].includes(mek.sender))) return replay(`You Are Still In The Game`)
     let room = Object.values(this.game).find(room => room.state === 'WAITING' && (text ? room.name === text : true))
     if (room) {
     reply('Partner found!')
     room.o = m.chat
-    room.game.playerO = m.sender
+    room.game.playerO = mek.sender
     room.state = 'PLAYING'
     let arr = room.game.render().map(v => {
     return {
@@ -1793,14 +1793,14 @@ ${arr.slice(6).join('')}
 Waiting @${room.game.currentTurn.split('@')[0]}
 
 Type *surrender* to surrender and admit defeat`
-    if (room.x !== room.o) await XeonBotInc.sendText(room.x, str, m, { mentions: parseMention(str) } )
-    await XeonBotInc.sendText(room.o, str, m, { mentions: parseMention(str) } )
+    if (room.x !== room.o) await JirayaBot.sendText(room.x, str, m, { mentions: parseMention(str) } )
+    await JirayaBot.sendText(room.o, str, m, { mentions: parseMention(str) } )
     } else {
     room = {
     id: 'tictactoe-' + (+new Date),
     x: m.chat,
     o: '',
-    game: new TicTacToe(m.sender, 'o'),
+    game: new TicTacToe(mek.sender, 'o'),
     state: 'WAITING'
     }
     if (text) room.name = text
@@ -1814,7 +1814,7 @@ Type *surrender* to surrender and admit defeat`
     try {
     if (this.game) {
     delete this.game
-    XeonBotInc.sendText(m.chat, `Successfully Deleted The TicTacToe Session`, m)
+    JirayaBot.sendText(m.chat, `Successfully Deleted The TicTacToe Session`, m)
     } else if (!this.game) {
     reply(`TicTacToe🎮 Session Does Not Exist`)
     } else reply('?')
@@ -2105,36 +2105,36 @@ break
 //FUNCIONES DE BAN Y DESBAN			
 			
 case 'ban':
-    if (!isGroup) return reply(mess.only.group)
-    if (!isGroupAdmins) return reply(mess.only.admin)
-    if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-    if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
-    mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
-    pru = '*\n'
-    for (let _ of mentioned) {
-    pru += `@${_.split('@')[0]}\n`
-    }
-    ban.push(`${mentioned}`)
-    fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
-    susp = `『 BANEADO 🚫 』\n\n◉Nombre: @${mentioned[0].split('@')[0]}\n◉Razon: Spam\n\n*Usted a sido baneado del uso del bot, no podra usar el bot hasta nuevo aviso*`
-    mentions(`${susp}`, mentioned, true)   
-    break
-    
-    case 'desban':
-    if (!isGroup) return reply(mess.only.group)
-    if (!isGroupAdmins) return reply(mess.only.admin)
-    if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-    if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
-    mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
-    pru = '*\n'
-    for (let _ of mentioned) {
-    pru += `@${_.split('@')[0]}\n`
-    }
-    ban.splice(`${mentioned}`)
-    fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
-    susp = `『 DESBANEADO ✅ 』\n\n◉Nombre: @${mentioned[0].split('@')[0]}\n\n*Se te a retirado el BAN ya puedes usar el bot*`
-    mentions(`${susp}`, mentioned, true)   
-    break		
+if (!isGroup) return reply(mess.only.group)
+if (!isGroupAdmins) return reply(mess.only.admin)
+if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
+mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+pru = '*\n'
+for (let _ of mentioned) {
+pru += `@${_.split('@')[0]}\n`
+}
+ban.push(`${mentioned}`)
+fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+susp = `『 BANEADO 🚫 』\n\n◉Nombre: @${mentioned[0].split('@')[0]}\n◉Razon: Spam\n\n*Usted a sido baneado del uso del bot, no podra usar el bot hasta nuevo aviso*`
+mentions(`${susp}`, mentioned, true)   
+break
+
+case 'desban':
+if (!isGroup) return reply(mess.only.group)
+if (!isGroupAdmins) return reply(mess.only.admin)
+if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
+mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+pru = '*\n'
+for (let _ of mentioned) {
+pru += `@${_.split('@')[0]}\n`
+}
+ban.splice(`${mentioned}`)
+fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+susp = `『 DESBANEADO ✅ 』\n\n◉Nombre: @${mentioned[0].split('@')[0]}\n\n*Se te a retirado el BAN ya puedes usar el bot*`
+mentions(`${susp}`, mentioned, true)   
+break
 //══════════[ LEVELING FEATURES ]══════════//
 
 	case 'لفل':
