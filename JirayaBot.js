@@ -533,7 +533,69 @@ switch (command) {
 //══════════[ MENU FEATURES ]══════════//
 
 
+//----> akida <----//
+            
 
+              case 'روابط': // by jiraya
+        sendButMessage(from, `سلام عليكم ${pushname} `, `اختر اي مجموعه`, [
+          {
+            buttonText: {
+              displayText: `⇇إعلان دخـ🎐ـول عضو⇉`,
+            },
+            type: 1,
+          },
+          {
+            buttonId: `aakida2`,
+            buttonText: {
+              displayText: `⇇ترحيب☘️ دخول⇉`,
+            },
+            type: 1,
+          },
+          {
+            buttonId: `aakida3`,
+            buttonText: {
+              displayText: `⇇إعلان 💢 إنذار⇉`,
+            },
+            type: 1,
+          },
+          {
+            buttonId: `aakida4`,
+            buttonText: {
+              displayText: `⇇إعلان طــ⛔رد مؤقت⇉`,
+            },
+            type: 1,
+          },
+          {
+            buttonId: `aakida5`,
+            buttonText: {
+              displayText: `⇇إعلان طــ⛔رد مؤبد⇉`,
+            },
+            type: 1,
+          },
+          {
+            buttonId: `aakida6`,
+            buttonText: {
+              displayText: `⇇إعلان خر🚪وج مؤقت⇉`,
+            },
+            type: 1,
+          },
+        ]);
+        break;
+        case 'akida1':
+reply('')
+break
+case 'lah':
+reply('https://chat.whatsapp.com/BSOfsSGjwzs0bXMPsOKQoz')
+break
+case 'awokkk':
+reply('https://chat.whatsapp.com/HnXTfqMVVf1KKdCJEgClQa')
+break
+case 'h':
+reply('he/she is gone bro.. may he/she go to hell too 😏')
+break
+case 'okeyx':
+reply('💐🌺🌻I WELCOME THE NEW MEMBER WITH SOME FLOWERS🌻🌺💐')
+break
 case 'مضاد':
 
 if (!isGroup) return reply(mess.only.group)
@@ -622,65 +684,6 @@ case 'فعالية':
         hideTag(from, `${q}`)
         }
         break
-
-        //----> akida <----//
-            
-
-        case 'روابط': // by jiraya
-        sendButMessage(from, `سلام عليكم ${pushname} `, `اختر اي مجموعه`, [
-          {
-            buttonText: {
-              displayText: `⇇إعلان دخـ🎐ـول عضو⇉`,
-            },
-            type: 1,
-          },
-          {
-            buttonText: {
-              displayText: `⇇ترحيب☘️ دخول⇉`,
-            },
-            type: 1,
-          },
-          {
-            buttonText: {
-              displayText: `⇇إعلان 💢 إنذار⇉`,
-            },
-            type: 1,
-          },
-          {
-            buttonText: {
-              displayText: `⇇إعلان طــ⛔رد مؤقت⇉`,
-            },
-            type: 1,
-          },
-          {
-            buttonText: {
-              displayText: `⇇إعلان طــ⛔رد مؤبد⇉`,
-            },
-            type: 1,
-          },
-          {
-            buttonText: {
-              displayText: `⇇إعلان خر🚪وج مؤقت⇉`,
-            },
-            type: 1,
-          },
-        ]);
-        break;
-        case 'akida1':
-reply('')
-break
-case 'lah':
-reply('https://chat.whatsapp.com/BSOfsSGjwzs0bXMPsOKQoz')
-break
-case 'awokkk':
-reply('https://chat.whatsapp.com/HnXTfqMVVf1KKdCJEgClQa')
-break
-case 'h':
-reply('he/she is gone bro.. may he/she go to hell too 😏')
-break
-case 'okeyx':
-reply('💐🌺🌻I WELCOME THE NEW MEMBER WITH SOME FLOWERS🌻🌺💐')
-break
 //━━━━━━━━━━━━━━━[ THE END OF ALL FEATURES ]━━━━━━━━━━━━━━━━━//
 				
 default:
